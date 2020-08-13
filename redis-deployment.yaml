@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  labels:
+    app: darkwire
+  namespace: darkwire-space
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: darkwire
+      name: redis-pod
+  template:
+    metadata:
+      labels:
+        app: darkwire
+        name: redis-pod
+      name: redis-pod
+    spec:
+      containers:
+        - name: redis-container
+          image: redis:6.0.6
+          ports:
+            - protocol: TCP
+              containerPort: 6379
