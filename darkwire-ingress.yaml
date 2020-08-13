@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: darkwire-ingress
+  annotations:
+    kubernetes.io/ingress.class: 'nginx'
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
+  namespace: darkwire-space
+spec:
+  tls:
+    - hosts:
+        - chat.lengman.se
+        - chatt.lengman.se
+      secretName: chat-tls
+  rules:
+    - host: chat.lengman.se
+      http:
+        paths:
+          - backend:
+              serviceName: darkwire-service
+              servicePort: 80
+            path: /
+    - host: chatt.lengman.se
+      http:
+        paths:
+          - backend:
+              serviceName: darkwire-service
+              servicePort: 80
+            path: /
