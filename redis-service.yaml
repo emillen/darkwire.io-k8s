@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  labels:
+    app: darkwire
+  namespace: darkwire-space
+spec:
+  selector:
+    app: darkwire
+    name: redis-pod
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 6379
